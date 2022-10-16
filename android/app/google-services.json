@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "71693804254",
+    "project_id": "todolist-89bb8",
+    "storage_bucket": "todolist-89bb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71693804254:android:614ef3d10ca43f6053584f",
+        "android_client_info": {
+          "package_name": "net.kzabe.todolist_flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71693804254-drh4etcan95i0q1c1ue58alb7v259ajl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbEsq5kMyRG1iG9NsrRoDArTg8ejEATz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71693804254-drh4etcan95i0q1c1ue58alb7v259ajl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "71693804254-qt7mars5125f7p0qbbl18qq991rvdgsl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "net.kzabe.TodolistSwiftApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
