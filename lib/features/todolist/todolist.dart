@@ -4,14 +4,14 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:todolist_flutter_app/models/task.dart';
 import 'package:todolist_flutter_app/services/api/task.dart';
 
-class TodoList extends StatefulWidget {
-  const TodoList({super.key});
+class TodoListView extends StatefulWidget {
+  const TodoListView({super.key});
 
   @override
-  State<TodoList> createState() => _TodoListState();
+  State<TodoListView> createState() => _TodoListViewState();
 }
 
-class _TodoListState extends State<TodoList> {
+class _TodoListViewState extends State<TodoListView> {
   late Future<Tasks> tasks;
 
   @override
