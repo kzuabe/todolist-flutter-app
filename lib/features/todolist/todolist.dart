@@ -22,24 +22,25 @@ class _TodoListViewState extends State<TodoListView> {
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-      child: FutureBuilder<Tasks>(
-        future: tasks,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: ((context, index) {
-                final task = snapshot.data![index];
-                return ListTile(
-                  leading: Icon(task.status == TaskStatus.todo ? Icons.circle_outlined : Icons.check_circle),
-                  title: Text(task.title),
-                );
-              }),
-            );
-          }
-          return const CircularProgressIndicator();
-        },
-      )
-    );
+        child: FutureBuilder<Tasks>(
+      future: tasks,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: ((context, index) {
+              final task = snapshot.data![index];
+              return ListTile(
+                leading: Icon(task.status == TaskStatus.todo
+                    ? Icons.circle_outlined
+                    : Icons.check_circle),
+                title: Text(task.title),
+              );
+            }),
+          );
+        }
+        return const CircularProgressIndicator();
+      },
+    ));
   }
 }
