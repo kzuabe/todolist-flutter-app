@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter_app/screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:todolist_flutter_app/screens/login.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,8 +23,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My APP',
-      initialRoute: '/',
-      routes: {'/': (context) => const HomeScreen()},
+      initialRoute: '/login',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/login': (context) => const LoginScreen(),
+      },
     );
   }
 }
