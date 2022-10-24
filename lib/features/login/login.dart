@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -8,6 +9,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,18 +28,33 @@ class _LoginViewState extends State<LoginView> {
               decoration: const InputDecoration(
                 hintText: 'メールアドレス',
               ),
+              onChanged: (value) {
+                email = value;
+              },
             ),
             TextFormField(
               decoration: const InputDecoration(
                 hintText: 'パスワード',
               ),
               obscureText: true,
+              onChanged: (value) {
+                password = value;
+              },
             ),
             const SizedBox(
               height: 24,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                try {
+                  final credential = await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: email, password: password);
+                  Navigator.pushReplacementNamed(context, '/');
+                } on FirebaseAuthException catch (e) {
+                  print(e);
+                }
+              },
               child: const Text('ENTER'),
             )
           ],

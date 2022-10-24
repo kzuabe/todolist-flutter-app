@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter_app/models/task.dart';
 import 'package:todolist_flutter_app/services/api/task.dart';
@@ -10,11 +11,15 @@ class TodoListView extends StatefulWidget {
 }
 
 class _TodoListViewState extends State<TodoListView> {
+  late User? user;
   late Future<Tasks> tasks;
 
   @override
   void initState() {
     super.initState();
+
+    user = FirebaseAuth.instance.currentUser;
+
     var repository = TaskRepositoryImpl("http://localhost:8080");
     tasks = repository.fetchTasks();
   }
