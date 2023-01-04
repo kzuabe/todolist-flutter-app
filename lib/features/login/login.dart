@@ -1,19 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todolist_flutter_app/providers/auth.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends ConsumerState<LoginView> {
   String email = '';
   String password = '';
 
   @override
   Widget build(BuildContext context) {
+    final firebaseAuth = ref.watch(firebaseAuthProvider);
     return Center(
       child: Container(
         padding: const EdgeInsets.all(80.0),
@@ -47,8 +50,8 @@ class _LoginViewState extends State<LoginView> {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  final credential = await FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
+                  final credential =
+                      await firebaseAuth.signInWithEmailAndPassword(
                           email: email, password: password);
                 } on FirebaseAuthException catch (e) {
                   print(e);

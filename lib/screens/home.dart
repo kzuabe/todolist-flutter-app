@@ -1,12 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todolist_flutter_app/features/todolist/todolist.dart';
+import 'package:todolist_flutter_app/providers/auth.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final firebaseAuth = ref.watch(firebaseAuthProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -14,7 +16,7 @@ class HomeScreen extends StatelessWidget {
           TextButton(
               style: TextButton.styleFrom(foregroundColor: Colors.white),
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
+                await firebaseAuth.signOut();
               },
               child: const Text('ログアウト'))
         ],
