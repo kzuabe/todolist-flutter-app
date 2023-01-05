@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todolist_flutter_app/auth_widget.dart';
+import 'package:todolist_flutter_app/router.dart';
 import 'package:todolist_flutter_app/screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:todolist_flutter_app/screens/login.dart';
@@ -23,10 +24,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'My APP',
-        home: AuthWidget(
-            signedInBuilder: (_) => const HomeScreen(),
-            nonSignedInBuilder: (_) => const LoginScreen()));
+    return MaterialApp.router(title: 'My APP', routerConfig: router);
   }
 }
