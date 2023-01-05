@@ -6,6 +6,8 @@ import 'package:todolist_flutter_app/providers/auth.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
+  static const routeName = '/';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final firebaseAuth = ref.watch(firebaseAuthProvider);

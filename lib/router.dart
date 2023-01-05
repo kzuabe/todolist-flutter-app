@@ -7,11 +7,14 @@ import 'package:todolist_flutter_app/screens/login.dart';
 final routerProvider = Provider<GoRouter>((ref) {
   final authStateChanges = ref.watch(authStateChangesProvider);
   return GoRouter(
-      initialLocation: '/',
+      initialLocation: HomeScreen.routeName,
       routes: <RouteBase>[
-        GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
         GoRoute(
-            path: '/login', builder: (context, state) => const LoginScreen())
+            path: HomeScreen.routeName,
+            builder: (context, state) => const HomeScreen()),
+        GoRoute(
+            path: LoginScreen.routeName,
+            builder: (context, state) => const LoginScreen())
       ],
       redirect: (context, state) {
         if (authStateChanges.isLoading || authStateChanges.hasError)
@@ -20,7 +23,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         if (isAuth) {
           return null;
         } else {
-          return '/login';
+          return LoginScreen.routeName;
         }
       });
 });
