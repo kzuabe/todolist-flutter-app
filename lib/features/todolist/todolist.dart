@@ -16,7 +16,7 @@ class _TodoListViewState extends State<TodoListView> {
   void initState() {
     super.initState();
 
-    var repository = TaskRepositoryImpl("http://localhost:8080");
+    var repository = TaskRepository(baseURL: "http://localhost:8080");
     tasks = repository.fetchTasks();
   }
 
