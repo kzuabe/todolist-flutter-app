@@ -11,12 +11,12 @@ class TodoListView extends StatefulWidget {
 
 class _TodoListViewState extends State<TodoListView> {
   late Future<Tasks> tasks;
+  final repository = TaskRepository(baseURL: "http://localhost:8080");
 
   @override
   void initState() {
     super.initState();
 
-    var repository = TaskRepository(baseURL: "http://localhost:8080");
     tasks = repository.fetchTasks();
   }
 
@@ -32,11 +32,16 @@ class _TodoListViewState extends State<TodoListView> {
             itemBuilder: ((context, index) {
               final task = snapshot.data![index];
               return ListTile(
-                leading: Icon(task.status == TaskStatus.todo
-                    ? Icons.circle_outlined
-                    : Icons.check_circle),
-                title: Text(task.title),
-              );
+                  leading: Icon(task.status == TaskStatus.todo
+                      ? Icons.circle_outlined
+                      : Icons.check_circle),
+                  title: Text(task.title),
+                  onTap: () => {
+                        repository.updateTask(task.copyWith(
+                            status: task.status == TaskStatus.todo
+                                ? TaskStatus.done
+                                : TaskStatus.todo))
+                      });
             }),
           );
         }

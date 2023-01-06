@@ -21,4 +21,16 @@ class TaskRepository {
       throw Exception('Failed to fetch tasks');
     }
   }
+
+  Future<Task> updateTask(Task task) async {
+    String token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    final response = await http.put(Uri.parse('$baseURL/v1/tasks/${task.id}'),
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+        body: jsonEncode(task));
+    if (response.statusCode == 200) {
+      return Task.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to fetch task');
+    }
+  }
 }

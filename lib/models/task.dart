@@ -17,6 +17,19 @@ class Task {
         description: json['description'],
         status: TaskStatus.values[json['status']]);
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'description': description,
+        'status': status.index
+      };
+
+  Task copyWith({TaskStatus? status}) => Task(
+      id: id,
+      title: title,
+      description: description,
+      status: status ?? this.status);
 }
 
 typedef Tasks = List<Task>;
