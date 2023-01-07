@@ -2,8 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:todolist_flutter_app/models/task.dart';
+
+final taskRepositoryProvider =
+    Provider((ref) => TaskRepository(baseURL: 'http://localhost:8080'));
 
 class TaskRepository {
   final String baseURL;

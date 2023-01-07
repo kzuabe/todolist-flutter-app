@@ -1,52 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todolist_flutter_app/features/todolist/controller.dart';
 import 'package:todolist_flutter_app/models/task.dart';
-import 'package:todolist_flutter_app/services/api/task.dart';
 
-class TodoListView extends StatefulWidget {
+class TodoListView extends ConsumerWidget {
   const TodoListView({super.key});
 
   @override
-  State<TodoListView> createState() => _TodoListViewState();
-}
-
-class _TodoListViewState extends State<TodoListView> {
-  late Future<Tasks> tasks;
-  final repository = TaskRepository(baseURL: "http://localhost:8080");
-
-  @override
-  void initState() {
-    super.initState();
-
-    tasks = repository.fetchTasks();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scrollbar(
-        child: FutureBuilder<Tasks>(
-      future: tasks,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: ((context, index) {
-              final task = snapshot.data![index];
-              return ListTile(
-                  leading: Icon(task.status == TaskStatus.todo
-                      ? Icons.circle_outlined
-                      : Icons.check_circle),
-                  title: Text(task.title),
-                  onTap: () => {
-                        repository.updateTask(task.copyWith(
-                            status: task.status == TaskStatus.todo
-                                ? TaskStatus.done
-                                : TaskStatus.todo))
-                      });
-            }),
-          );
-        }
-        return const CircularProgressIndicator();
-      },
-    ));
+        child: ref.watch(tasksFetchProvider).when(
+            data: (data) => ListView.builder(
+                itemCount: data.length,
+                itemBuilder: ((context, index) {
+                  final task = data[index];
+                  return ListTile(
+                      leading: Icon(task.status == TaskStatus.todo
+                          ? Icons.circle_outlined
+                          : Icons.check_circle),
+                      title: Text(task.title),
+                      onTap: () => ref
+                          .watch(todoListControllerProvider)
+                          .toggleTaskStatus(task));
+                })),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: ((error, stackTrace) =>
+                Center(child: Text(error.toString())))));
   }
 }
