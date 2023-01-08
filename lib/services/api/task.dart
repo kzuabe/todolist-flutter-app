@@ -6,17 +6,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:todolist_flutter_app/models/task.dart';
 
-final taskRepositoryProvider =
-    Provider((ref) => TaskRepository(baseURL: 'http://localhost:8080'));
+final taskRepositoryProvider = Provider((ref) =>
+    TaskRepository(client: http.Client(), baseURL: 'http://localhost:8080'));
 
 class TaskRepository {
+  final http.Client client;
   final String baseURL;
 
-  TaskRepository({required this.baseURL});
+  TaskRepository({required this.baseURL, required this.client});
 
   Future<Tasks> fetchTasks() async {
     String token = await FirebaseAuth.instance.currentUser!.getIdToken();
-    final response = await http.get(Uri.parse('$baseURL/v1/tasks'),
+    final response = await client.get(Uri.parse('$baseURL/v1/tasks'),
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
@@ -28,7 +29,7 @@ class TaskRepository {
 
   Future<Task> updateTask(Task task) async {
     String token = await FirebaseAuth.instance.currentUser!.getIdToken();
-    final response = await http.put(Uri.parse('$baseURL/v1/tasks/${task.id}'),
+    final response = await client.put(Uri.parse('$baseURL/v1/tasks/${task.id}'),
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
         body: jsonEncode(task));
     if (response.statusCode == 200) {
